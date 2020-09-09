@@ -35,6 +35,7 @@
     },
     "homepage": "https://adryd.co/wits.mp4",
     "dependencies": {
+        "axios": "^0.20.0",
         "jimp": "^0.14.0",
         "npmlog": "^4.1.2",
         "polka": "^0.5.2"

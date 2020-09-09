@@ -5,6 +5,7 @@ const { exec } = require('child_process');
 const Polka = require('polka');
 const jimp = require('jimp');
 const log = require('npmlog');
+const axios = require('axios');
 
 const dataFiles = {
     lastFrame: path.join(__dirname, 'data', 'lastFrame.jpg'),
@@ -53,19 +54,23 @@ const idGen = () => {
 
 const drawText = async (image, ipAddress) => {
     // not too proud of you prettier...
+    const url = `https://ipinfo.io/${ipAddress}`;
+    const { data } = await axios.get(url);
+    const { city, region, country } = data;
+
     image.print(
         await spongebobFont,
         0,
         0,
         {
-            text: ipAddress,
+            text: `${ipAddress}\n${city}, ${region}, ${country}`,
             alignmentX: jimp.HORIZONTAL_ALIGN_CENTER,
             alignmentY: jimp.VERTICAL_ALIGN_MIDDLE,
         },
         1920,
         1080
     );
-    image.print(
+    /*image.print(
         await sansSerifFont,
         0,
         0,
@@ -88,7 +93,7 @@ const drawText = async (image, ipAddress) => {
         },
         1450,
         960
-    );
+    );*/
     return image;
 };
 
